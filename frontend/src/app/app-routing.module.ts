@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {ContactComponent} from "rxjs";
+import {RouterModule} from '@angular/router';
 
+import {Routes} from '@angular/router';
+import {ContactComponent} from "./contact/contact.component";
+
+export const routes: Routes = [
+  {path: '', component: ContactComponent}
+  ];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ],
-  Routes: [
-    {path:'list', component: contactCom
-  ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

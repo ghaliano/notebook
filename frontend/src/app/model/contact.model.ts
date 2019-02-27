@@ -1,9 +1,15 @@
 export class Contact {
-id : any;
-name : any;
-email : any;
-adresse : any;
-skype : any;
-viber : any;
+    id: number;
+    name: string;
+    email: string;
+    adresse: string;
+    skype: string;
+    photo: string;
+    numbers: Number[];
+}
 
+export class Number {
+    id: number;
+    num: string;
+    contact: Contact;
 }

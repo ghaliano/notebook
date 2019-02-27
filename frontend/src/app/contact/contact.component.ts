@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Contact} from "../model/contact.model";
+import {HttpClient} from "@angular/common/http";
+import {ContactService} from "../services/contact.service";
 
 @Component({
     selector: 'app-contact',
@@ -7,19 +9,21 @@ import {Contact} from "../model/contact.model";
     styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
-    listContact: Array<Contact> = [
-        {id: 1, name: 'Ahmed', email:'ahmed@gmail.com', adresse:'tunis', skype:'Ahmed', viber:'viber123'},
-        {id: 2, name: 'frontend', email:'front@gmail.com', adresse:'ariana', skype:'dkdkdk', viber:'vkkkk123'}
+    contacts: Array<Contact> = [];
 
-
-
-    ]
-
-    constructor() {
+    constructor(private contactService: ContactService) {
+        this
+            .contactService
+            .fetchContacts()
+            .subscribe((result: any) => {
+                alert(1);
+                console.log(result);
+                this.contacts = result['hydra:member'];
+            })
+        ;
     }
 
     ngOnInit() {
+
     }
-
-
 }
