@@ -8,7 +8,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"contact_read"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\NumberRepository")
  */
@@ -18,17 +17,18 @@ class Number
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("contact_read")
      */
     private $id;
 
     /**
      * @Groups("contact_read")
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("contact_read")
      */
     private $num;
 
     /**
-     * @Groups("contact_read")
      * @ORM\ManyToOne(targetEntity="App\Entity\Contact", inversedBy="numbers")
      * @ORM\JoinColumn(nullable=false)
      */

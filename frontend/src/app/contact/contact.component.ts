@@ -16,14 +16,11 @@ import {
         trigger('openClose', [
             // ...
             state('open', style({
-                height: '200px',
                 opacity: 1,
-                backgroundColor: 'yellow'
             })),
             state('closed', style({
-                height: '100px',
-                opacity: 0.5,
-                backgroundColor: 'green'
+                height: '0px',
+                opacity: 0,
             })),
             transition('open => closed', [
                 animate('1s')
@@ -40,23 +37,39 @@ import {
 })
 export class ContactComponent implements OnInit {
     isOpen = true;
-
+    isContactLoading: boolean = false;
     contacts: Array<Contact> = [];
     numbers: Array<number> = [];
+    term:string = "";
 
     constructor(private contactService: ContactService) {
+        this.search();
+    }
+
+    search(){
+        this.isContactLoading = true;
         this
             .contactService
-            .fetchContacts()
+            .fetchContacts(this.term)
             .subscribe((result: any) => {
-                console.log(result);
                 this.contacts = result['hydra:member'];
+                this.isContactLoading = false;
             })
         ;
     }
+    deleteContact(contact){
+        this.contactService
+            .deleteContact(contact)
+            .subscribe((result:any)=>{this.search();});
+    }
+
 
     ngOnInit() {
 
+    }
+
+    toggleDetail(contact:any){
+        contact.selected = !contact.selected;
     }
 
 

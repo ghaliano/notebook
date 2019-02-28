@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ApiResource(
@@ -26,6 +28,8 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("contact_read")
+     * @ApiFilter(SearchFilter::class, strategy="partial")
      */
     private $name;
 
@@ -55,6 +59,7 @@ class Contact
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Number", mappedBy="contact", orphanRemoval=true)
+     * @Groups("contact_read")
      */
     private $numbers;
 

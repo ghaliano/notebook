@@ -7,18 +7,23 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import {ContactService} from "./services/contact.service";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SpinnerComponent } from './spinner/spinner.component';
+import {FormsModule} from "@angular/forms";
+import { NumeroComponent } from './numero/numero.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        ContactComponent
+        ContactComponent,
+        SpinnerComponent,
+        NumeroComponent
     ],
     imports: [
         HttpClientModule,
         BrowserModule,
         AppRoutingModule,
-        BrowserAnimationsModule
-
+        BrowserAnimationsModule,
+        FormsModule
     ],
     providers: [ContactService],
     bootstrap: [AppComponent]
