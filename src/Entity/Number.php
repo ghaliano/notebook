@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"contact_read"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\NumberRepository")
  */
 class Number
@@ -19,11 +22,13 @@ class Number
     private $id;
 
     /**
+     * @Groups("contact_read")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $num;
 
     /**
+     * @Groups("contact_read")
      * @ORM\ManyToOne(targetEntity="App\Entity\Contact", inversedBy="numbers")
      * @ORM\JoinColumn(nullable=false)
      */
