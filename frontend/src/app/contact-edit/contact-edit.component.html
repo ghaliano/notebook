@@ -1,0 +1,31 @@
+<spinner *ngIf="isContactLoading"></spinner>
+<form *ngIf="!isContactLoading" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="container">
+    <div class="col-12">
+      <div class="form-group text-center">
+        <br><h5>Edit contact</h5>
+      </div>
+      <div class="form-group">
+        <input class="form-control" formControlName="name" type="text" placeholder="Contact name"/>
+      </div>
+      <div class="form-group">
+        <input class="form-control" formControlName="email" type="text" placeholder="Email ">
+      </div>
+      <div class="form-group">
+        <input class="form-control" formControlName="skype" type="text" placeholder="Skype">
+      </div>
+      <div class="form-group">
+            <textarea class="form-control" formControlName="adress" type="text" placeholder="Addresse">
+      </textarea>
+      </div>
+      <div class="form-group">
+        <spinner *ngIf="spinneris"></spinner>
+        <button [disabled]="!form.valid"
+                [ngClass]="form.valid?'btn-success':'btn-warning'"
+                class="btn btn-block" type="submit">
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

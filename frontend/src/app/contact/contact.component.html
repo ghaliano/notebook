@@ -1,118 +1,48 @@
-<div id="chatbox">
-    <div id="friendslist">
-        <div id="topmenu">
-            <span class="friends"></span>
-            <span class="chats">Tel</span>
-            <span class="history">+</span>
-        </div>
+<div class="badge badge-info text-center" style="margin: 5px;">
+    {{contacts.length}} of {{totalResult}}
+    <span *ngIf="contacts.length == totalResult">No more result</span>
+</div>
+<br>
+<div id="search">
+    <input type="text"
+           (input) = "search()"
+           [(ngModel)] = "term"
+           id="searchfield"
+           placeholder="Search contacts..."
+    />
+</div>
+<div id="friends" style="width: 100%;height: 400px; float: left; overflow: auto;" (scroll)="onScroll($event)">
 
-        <div id="friends">
-            <div class="friend"
-                    (click)="toggleDetail(contact)"
-                    *ngFor="let contact of contacts">
-                <div>
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg"/>
-                    <p>
-                        <strong>{{contact.name}}</strong>
-                    </p>
+    <div style="overflow: auto" >
+        <div class="friend"
+             (click)="toggleDetail(contact)"
+             *ngFor="let contact of contacts">
+            <div class="media">
+                <img class="mr3" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg"/>
+
+                <div class="media-body">
+                    <h5 class="mt-0">{{contact.id}}: {{contact.name}}</h5>
                     <span *ngIf="contact.numbers.length" class="pull-right">{{contact.numbers.length}}</span>
                     <button type="button" (click)="deleteContact(contact)">-</button>
-                    <a [routerLink]="['contact/'+contact.id+'/add']"> addNumber</a>
-                </div>
-                <br />
+                    <a [routerLink]="['contact/'+contact.id+'/number/add']"> addNumber</a>
+                    <a [routerLink]="['contact/'+contact.id+'/edit']">edit</a>                </div>
+
                 <div [@openClose]="contact.selected?'open':'closed'">
-                <div
+                    <div
 
-                        class="tel"
-                        *ngFor="let number of contact.numbers">
-                    {{number.num}}
+                            class="tel"
+                            *ngFor="let number of contact.numbers">
+                        {{number.num}}
+                    </div>
                 </div>
-                </div>
             </div>
-            <div *ngIf="isContactLoading">
-                <spinner></spinner>
-            </div>
-
-            <div id="search">
-                <input type="text"
-                    (input) = "search()"
-                    [(ngModel)] = "term"
-                    id="searchfield"
-                    placeholder="Search contacts..."
-                />
-            </div>
-
         </div>
-
+        <div *ngIf="isContactLoading">
+            <spinner></spinner>
+        </div>
     </div>
 
-    <div id="chatview" class="p1">
-        <div id="profile">
 
-            <div id="close">
-                <div class="cy"></div>
-                <div class="cx"></div>
-            </div>
 
-            <p>Miro Badev</p>
-            <span>miro@badev@gmail.com</span>
-        </div>
-        <div id="chat-messages">
-            <label>Thursday 02</label>
 
-            <div class="message">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg"/>
-                <div class="bubble">
-                    Really cool stuff!
-                    <div class="corner"></div>
-                    <span>3 min</span>
-                </div>
-            </div>
-
-            <div class="message right">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2_copy.jpg"/>
-                <div class="bubble">
-                    Can you share a link for the tutorial?
-                    <div class="corner"></div>
-                    <span>1 min</span>
-                </div>
-            </div>
-
-            <div class="message">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg"/>
-                <div class="bubble">
-                    Yeah, hold on
-                    <div class="corner"></div>
-                    <span>Now</span>
-                </div>
-            </div>
-
-            <div class="message right">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2_copy.jpg"/>
-                <div class="bubble">
-                    Can you share a link for the tutorial?
-                    <div class="corner"></div>
-                    <span>1 min</span>
-                </div>
-            </div>
-
-            <div class="message">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg"/>
-                <div class="bubble">
-                    Yeah, hold on
-                    <div class="corner"></div>
-                    <span>Now</span>
-                </div>
-            </div>
-
-        </div>
-
-        <div id="sendmessage">
-            <input type="text" value="Send message..."/>
-            <button id="send"></button>
-        </div>
-
-    </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

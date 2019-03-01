@@ -8,22 +8,27 @@ import {HttpClientModule} from "@angular/common/http";
 import {ContactService} from "./services/contact.service";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SpinnerComponent } from './spinner/spinner.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NumeroComponent } from './numero/numero.component';
+import { ContactAddComponent } from './contact-add/contact-add.component';
+import { ContactEditComponent } from './contact-edit/contact-edit.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ContactComponent,
         SpinnerComponent,
-        NumeroComponent
+        NumeroComponent,
+        ContactAddComponent,
+        ContactEditComponent
     ],
     imports: [
         HttpClientModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [ContactService],
     bootstrap: [AppComponent]

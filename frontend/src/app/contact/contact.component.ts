@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {Contact} from "../model/contact.model";
 import {HttpClient} from "@angular/common/http";
 import {ContactService} from "../services/contact.service";
@@ -41,21 +41,41 @@ export class ContactComponent implements OnInit {
     contacts: Array<Contact> = [];
     numbers: Array<number> = [];
     term:string = "";
-
+    page: number = 1;
+    totalResult: number = 0;
     constructor(private contactService: ContactService) {
         this.search();
     }
 
+    @HostListener('scroll', ['$event'])
+    onScroll(event: any) {
+        //visible height + pixel scrolled >= total height
+        if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
+            console.log("End");
+            this.page++;
+            this.search();
+        }
+    }
+
     search(){
-        this.isContactLoading = true;
-        this
-            .contactService
-            .fetchContacts(this.term)
-            .subscribe((result: any) => {
-                this.contacts = result['hydra:member'];
-                this.isContactLoading = false;
-            })
-        ;
+        if (
+            (this.contacts.length < this.totalResult) ||
+            (!this.totalResult && !this.contacts.length)
+        ){
+            this.isContactLoading = true;
+            this
+                .contactService
+                .fetchContacts(this.term, this.page)
+                .subscribe((result: any) => {
+                    this.totalResult = result['hydra:totalItems'];
+                    result['hydra:member'].forEach((contact) => {
+                        this.contacts.push(contact);
+                    })
+                    this.isContactLoading = false;
+                })
+            ;
+
+        }
     }
     deleteContact(contact){
         this.contactService
