@@ -1,4 +1,8 @@
 api_platform:
+    collection:
+        pagination:
+            items_per_page: 2
+            page_parameter_name: page
     allow_plain_identifiers: true
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']

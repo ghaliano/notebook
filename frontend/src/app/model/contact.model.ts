@@ -6,11 +6,12 @@ export class Contact {
     skype: string;
     photo: string;
     numbers: Number[];
-
+    selected: boolean;
 }
 
 export class Number {
     id: number;
     num: string;
     contact: Contact;
+    isUnderDelete: boolean;
 }

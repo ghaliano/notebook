@@ -1,48 +1,82 @@
 <div class="badge badge-info text-center" style="margin: 5px;">
     {{contacts.length}} of {{totalResult}}
-    <span *ngIf="contacts.length == totalResult">No more result</span>
+
 </div>
 <br>
 <div id="search">
     <input type="text"
-           (input) = "search()"
-           [(ngModel)] = "term"
+           (input)="autoComplete()"
+           [(ngModel)]="term"
            id="searchfield"
            placeholder="Search contacts..."
     />
 </div>
 <div id="friends" style="width: 100%;height: 400px; float: left; overflow: auto;" (scroll)="onScroll($event)">
-
-    <div style="overflow: auto" >
+    <div class="alert alert-danger" *ngIf="error">
+        {{error}}
+    </div>
+    <div>
         <div class="friend"
-             (click)="toggleDetail(contact)"
              *ngFor="let contact of contacts">
-            <div class="media">
+            <div class="media"
+                 (click)="toggleDetail(contact)">
                 <img class="mr3" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg"/>
 
                 <div class="media-body">
                     <h5 class="mt-0">{{contact.id}}: {{contact.name}}</h5>
                     <span *ngIf="contact.numbers.length" class="pull-right">{{contact.numbers.length}}</span>
-                    <button type="button" (click)="deleteContact(contact)">-</button>
-                    <a [routerLink]="['contact/'+contact.id+'/number/add']"> addNumber</a>
-                    <a [routerLink]="['contact/'+contact.id+'/edit']">edit</a>                </div>
+                </div>
 
-                <div [@openClose]="contact.selected?'open':'closed'">
-                    <div
-
-                            class="tel"
-                            *ngFor="let number of contact.numbers">
-                        {{number.num}}
+                <div
+                        style="position: absolute; right: 5px; top: 30px; font-size: 10px;"
+                        class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" (click)="deleteContact(contact)" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <a [routerLink]="['contact/'+contact.id+'/number/add']" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <a [routerLink]="['contact/'+contact.id+'/edit']" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </div>
+            </div>
+            <div cdkDropList [@openClose]="contact.selected?'open':'closed'">
+                <div cdkDrag (cdkDragEnded)="drop($event, number, contact)"
+                        class="tel"
+                        *ngFor="let number of contact.numbers">
+                    <div class="row">
+                        <div class="col">
+                            <span>
+                                <spinner
+                                        *ngIf="number.isUnderDelete"
+                                        [isSmall]="true"></spinner></span>
+                           <input *ngIf="number.isUnderEdit"
+                                   (input) = "editNumber(number)"
+                                   type="text"
+                                   [(ngModel)]="number.num" />
+                            <span
+                                    (click)="toggleEdit(number)"
+                                    *ngIf="!number.isUnderEdit">{{number.num}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div *ngIf="isContactLoading">
-            <spinner></spinner>
-        </div>
     </div>
 
-
-
-
-</div>
+    <div style="padding: 5px;">
+        <button [disabled]="contacts.length == totalResult"
+                class="btn btn-success btn-block btn-sm" (click)="loadMore()"
+        >
+            <span *ngIf="isContactLoading">Loading ...</span>
+            <span *ngIf="(contacts.length == totalResult) && !isContactLoading">
+                No more result
+            </span>
+            <span *ngIf="contacts.length != totalResult">Load more</span>
+        </button>
+    </div>
+    <div *ngIf="isContactLoading" class="home">
+        <spinner></spinner>
+    </div>
+<div class="fas fa-trash" style="font-size: 30px; position: absolute; bottom: 0px; right: 0px; margin: 15px;" id="trash"></div>

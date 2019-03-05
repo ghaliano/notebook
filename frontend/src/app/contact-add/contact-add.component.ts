@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class ContactAddComponent implements OnInit {
     form: FormGroup;
     spinneris:boolean=false;
+
     constructor(private fb: FormBuilder,
                 private contactService: ContactService,
                 private router: Router) {
@@ -27,7 +28,7 @@ export class ContactAddComponent implements OnInit {
     }
 
     submit() {
-        this.spinneris=true;
+        this.spinneris= true;
         console.log(this.form.valid);
         this
             .contactService

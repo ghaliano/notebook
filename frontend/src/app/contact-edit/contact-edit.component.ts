@@ -32,8 +32,8 @@ export class ContactEditComponent implements OnInit {
     ngOnInit() {
         this.id = +this.route.snapshot.paramMap.get('id');
         this.isContactLoading = true;
-        this.contactService.getById(this.id).subscribe((result) => {
-            this.isContactLoading = false;
+        this.contactService.getById(this.id)
+            .subscribe((result) => {
             this.contact = result;
             this.form.patchValue(this.contact);
         });

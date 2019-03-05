@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- * )
+ * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\NumberRepository")
  */
 class Number

@@ -12,6 +12,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NumeroComponent } from './numero/numero.component';
 import { ContactAddComponent } from './contact-add/contact-add.component';
 import { ContactEditComponent } from './contact-edit/contact-edit.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import { NumberComponent } from './number/number.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,8 @@ import { ContactEditComponent } from './contact-edit/contact-edit.component';
         SpinnerComponent,
         NumeroComponent,
         ContactAddComponent,
-        ContactEditComponent
+        ContactEditComponent,
+        NumberComponent
     ],
     imports: [
         HttpClientModule,
@@ -28,7 +31,8 @@ import { ContactEditComponent } from './contact-edit/contact-edit.component';
         AppRoutingModule,
         BrowserAnimationsModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DragDropModule
     ],
     providers: [ContactService],
     bootstrap: [AppComponent]

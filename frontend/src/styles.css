@@ -30,7 +30,6 @@ body {
     width: 290px;
     background: #fff;
     border-radius: 6px;
-    overflow: hidden;
     height: 484px;
     position: absolute;
     top: 10px;
@@ -43,6 +42,7 @@ body {
     top: 0;
     left: 0;
     width: 290px;
+    background-color: white;
 }
 
 #topmenu {
@@ -481,3 +481,11 @@ div.message.right .corner {
     font-size: 20px;
 }
 
+.home spinner{
+    position: absolute;
+    top: 0px;
+    right: 15px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

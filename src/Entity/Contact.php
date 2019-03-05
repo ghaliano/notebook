@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  * @ApiResource(
  *     normalizationContext={"groups"={"contact_read"}}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"name": "partial"})
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
  */
 class Contact
@@ -29,7 +30,6 @@ class Contact
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("contact_read")
-     * @ApiFilter(SearchFilter::class, strategy="partial")
      */
     private $name;
 
@@ -52,12 +52,13 @@ class Contact
     private $skype;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups("contact_read")
      */
     private $photo;
 
     /**
+     * @ApiFilter(SearchFilter::class, properties={"numbers.num": "ipartial"})
      * @ORM\OneToMany(targetEntity="App\Entity\Number", mappedBy="contact", orphanRemoval=true)
      * @Groups("contact_read")
      */
